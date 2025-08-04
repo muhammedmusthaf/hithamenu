@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import AddItem from "./components/AddItem";
 import EditItem from "./components/EditItem";
+import ScrollTop from "./components/ScrollTop";
 
 
 
@@ -21,11 +22,13 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <Routes>
-        {!token ? (
-          <Route path="*" element={<Login onLogin={handleLogin} />} />
-        ) : (
+    <div>
+      <ScrollTop />
+      <Router>
+        <Routes>
+          {!token ? (
+            <Route path="*" element={<Login onLogin={handleLogin} />} />
+          ) : (
           <>
             <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
             <Route path="/add" element={<AddItem />} />
@@ -35,6 +38,7 @@ const App = () => {
         )}
       </Routes>
     </Router>
+      </div>
   );
 };
 

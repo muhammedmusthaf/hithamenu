@@ -24,7 +24,7 @@ const AddItem = () => {
   const handleUpload = async () => {
     const formData = new FormData();
     formData.append("image", data.image);
-    const res = await axios.post("http://localhost:5000/api/upload/", formData);
+    const res = await axios.post("https://hithaadmin.vercel.app/api/upload/", formData);
     return res.data.imageUrl;
   };
 
@@ -40,7 +40,7 @@ const AddItem = () => {
         full: Number(data.portions.full),
       },
     };
-    await axios.post("http://localhost:5000/api/menu/", itemData, {
+    await axios.post("https://hithaadmin.vercel.app/api/menu/", itemData, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     navigate("/");

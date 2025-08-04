@@ -16,7 +16,7 @@ const Menu = () => {
     const fetchMenuItems = async () => {
       try {
         // Replace with your actual backend URL
-        const response = await fetch('http://localhost:5000/api/menu');
+        const response = await fetch('https://hithamenu.vercel.app/api/menu');
         if (!response.ok) {
           throw new Error('Failed to fetch menu items');
         }
