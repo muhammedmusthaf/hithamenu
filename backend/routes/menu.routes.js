@@ -1,7 +1,7 @@
 import express from "express";
 
-import verifyToken from "../middleware/verifytoken.js";
 import Menuu from "../models/Menuu.model.js";
+import Verify from "../middleware/Verify.js";
 
 
 
@@ -18,7 +18,7 @@ menu.get("/", async (req, res) => {
 });
 
 // POST new
-menu.post("/", verifyToken, async (req, res) => {
+menu.post("/", Verify, async (req, res) => {
   try {
     const newItem = new Menuu(req.body);
     const saved = await newItem.save();
@@ -29,7 +29,7 @@ menu.post("/", verifyToken, async (req, res) => {
 });
 
 // PUT update
-menu.put("/:id",verifyToken, async (req, res) => {
+menu.put("/:id", Verify, async (req, res) => {
   try {
     const updated = await Menuu.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updated);
@@ -39,7 +39,7 @@ menu.put("/:id",verifyToken, async (req, res) => {
 });
 
 // DELETE
-menu.delete("/:id",verifyToken, async (req, res) => {
+menu.delete("/:id", Verify, async (req, res) => {
   try {
     await Menuu.findByIdAndDelete(req.params.id);
     res.json({ message: "Deleted" });
