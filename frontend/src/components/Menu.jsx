@@ -77,7 +77,7 @@ const Menu = () => {
   "Meals": "assets/meals.jpg"
 
     };
-       return imageMap[category.toLowerCase()] || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop';
+       return imageMap[category] || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop';
 
   };
 
