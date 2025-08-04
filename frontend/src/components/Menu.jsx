@@ -125,6 +125,7 @@ const Menu = () => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setCurrentPage('items');
+     window.scrollTo(0, 0);
   };
 
   const handleBackToCategories = () => {
