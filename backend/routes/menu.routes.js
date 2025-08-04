@@ -1,6 +1,7 @@
 import express from "express";
-import MenuItem from "../models/menuitem.model.js";
+
 import verifyToken from "../middleware/verifytoken.js";
+import Menuu from "../models/Menuu.model.js";
 
 
 
@@ -9,7 +10,7 @@ const menu = express.Router();
 // GET all
 menu.get("/", async (req, res) => {
   try {
-    const items = await MenuItem.find();
+    const items = await Menuu.find();
     res.json(items);
   } catch (err) {
     res.status(500).json({ error: "Fetch failed" });
@@ -19,7 +20,7 @@ menu.get("/", async (req, res) => {
 // POST new
 menu.post("/", verifyToken, async (req, res) => {
   try {
-    const newItem = new MenuItem(req.body);
+    const newItem = new Menuu(req.body);
     const saved = await newItem.save();
     res.status(201).json(saved);
   } catch (err) {
@@ -30,7 +31,7 @@ menu.post("/", verifyToken, async (req, res) => {
 // PUT update
 menu.put("/:id",verifyToken, async (req, res) => {
   try {
-    const updated = await MenuItem.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updated = await Menuu.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(updated);
   } catch (err) {
     res.status(400).json({ error: "Update failed" });
@@ -40,7 +41,7 @@ menu.put("/:id",verifyToken, async (req, res) => {
 // DELETE
 menu.delete("/:id",verifyToken, async (req, res) => {
   try {
-    await MenuItem.findByIdAndDelete(req.params.id);
+    await Menuu.findByIdAndDelete(req.params.id);
     res.json({ message: "Deleted" });
   } catch (err) {
     res.status(400).json({ error: "Delete failed" });

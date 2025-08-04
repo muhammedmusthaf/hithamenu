@@ -13,5 +13,5 @@ const MenuItemSchema = new mongoose.Schema({
   image: String,
 }, { timestamps: true });
 
-const MenuItem = mongoose.model("MenuItem", MenuItemSchema);
-export default MenuItem;
+const Menuu = mongoose.model("Menuu", MenuItemSchema);
+export default Menuu;
