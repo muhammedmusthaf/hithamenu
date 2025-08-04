@@ -11,11 +11,11 @@ import hotela from "./routes/upload.routes.js";
 import auth from "./routes/auth.routes.js";
 
 const app = express();
-app.use(cors());
+
 app.use(express.json());
 app.use(cors({
     origin: [
-        "https://hithamenu.vercel.app/","https://hithaadmin.vercel.app/"
+        "https://hithamenu.vercel.app","https://hithaadmin.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }));
