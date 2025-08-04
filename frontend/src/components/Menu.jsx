@@ -58,7 +58,7 @@ const Menu = () => {
   "Ice Creams": "assets/ice.jpg",
   "Veg Soups": "assets/vegsoup.jpg",
   "Non-Veg Soups": "assets/nonvegsoup.jpg",
-  "Chats": "assets/chats.jpg",
+  "Chats": "assets/chats.JPG",
   "Roti": "assets/roti.jpg",
   "Rolls": "assets/ROLL.jpg",
   "Chinese Starters (Veg)": "assets/chineseveg.jpg",
