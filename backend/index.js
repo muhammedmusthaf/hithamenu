@@ -16,7 +16,8 @@ app.use(express.json());
 app.use(cors({
     origin: [
         "https://hithamenu.vercel.app/","https://hithaadmin.vercel.app/"
-    ]
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }));
 
 app.use("/api/menu", menu);
