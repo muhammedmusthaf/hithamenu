@@ -63,7 +63,7 @@ const Menu = () => {
   "Rolls": "assets/ROLL.jpg",
   "Chinese Starters (Veg)": "assets/chineseveg.jpg",
   "Chinese Starters (Non-Veg)": "assets/chinesenon.jpg",
-  "veg": "assets/veg.jpg",
+  "Veg": "assets/veg.jpg",
   "Non-Veg": "assets/nonveg.jpg",
   "Veg Biryani": "assets/vegbri.jpg",
   "Non-Veg Biryani": "assets/nonvegbri.jpg",
