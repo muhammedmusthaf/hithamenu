@@ -77,6 +77,7 @@ const Menu = () => {
   "Meals": "assets/meals.jpg"
 
     };
+    return imageMap[category] || 'https://via.placeholder.com/400x250?text=No+Image';
     
 
   };
