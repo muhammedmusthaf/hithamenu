@@ -49,23 +49,23 @@ const Menu = () => {
 
   // Helper function to get category image
   const getCategoryImage = (category) => {
-    const imageMap = {
-       "Hot Drinks": "assets/hot.jpg",
-  "Juice": "assets/juice.jpg",
-  "Mocktail": "assets/mocktail.jpg",
-  "Milkshake": "assets/milshake.jpg",
-  "Mojito": "assets/Mojito.jpg",
-  "Ice Creams": "assets/ice.jpg",
-  "Veg Soups": "assets/vegsoup.jpg",
-  "Non-Veg Soups": "assets/nonvegsoup.jpg",
-  "Chats": "assets/chats.JPG",
-  "Roti": "assets/roti.jpg",
-  "Rolls": "assets/ROLL.jpg",
-  "Chinese Starters (Veg)": "assets/chineseveg.jpg",
-  "Chinese Starters (Non-Veg)": "assets/chinesenon.jpg",
-  "Veg": "assets/veg.jpg",
-  "Non-Veg": "assets/nonveg.jpg",
-  "Veg Biryani": "assets/vegbri.jpg",
+    const imageMap = {  
+       "Hot Drinks": "/assets/hot.jpg",
+  "Juice": "/assets/juice.jpg",
+  "Mocktail": "/assets/mocktail.jpg",
+  "Milkshake": "/assets/milshake.jpg",
+  "Mojito": "/assets/Mojito.jpg",
+  "Ice Creams": "/assets/ice.jpg",
+  "Veg Soups": "/assets/vegsoup.jpg",
+  "Non-Veg Soups": "/assets/nonvegsoup.jpg",
+  "Chats": "/assets/chats.JPG",
+  "Roti": "/assets/roti.jpg",
+  "Rolls": "/assets/ROLL.jpg",
+  "Chinese Starters (Veg)": "/assets/chineseveg.jpg",
+  "Chinese Starters (Non-Veg)": "/assets/chinesenon.jpg",
+  "Veg": "/assets/veg.jpg",
+  "Non-Veg": "/assets/nonveg.jpg",
+  "Veg Biryani": "/assets/vegbri.jpg",
   "Non-Veg Biryani": "assets/nonvegbri.jpg",
   "North Indian (Veg)": "assets/north.jpg",
   "North Indian (Non-Veg)": "assets/northnon.jpg",
@@ -77,8 +77,7 @@ const Menu = () => {
   "Meals": "assets/meals.jpg"
 
     };
-    return imageMap[category] || 'https://via.placeholder.com/400x250?text=No+Image';
-    
+       return imageMap[category.toLowerCase()] || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop';
 
   };
 
