@@ -23,7 +23,7 @@ const EditItem = () => {
 
   useEffect(() => {
     const fetchItem = async () => {
-      const res = await axios.get("https://hithaadmin.vercel.app/api/menu/", {
+      const res = await axios.get("https://hithamenu.onrender.com/api/menu/", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const item = res.data.find((i) => i._id === id);
@@ -34,7 +34,7 @@ const EditItem = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    await axios.put(`https://hithaadmin.vercel.app/api/menu/${id}`, {
+    await axios.put(`https://hithamenu.onrender.com/api/menu/${id}`, {
       ...data,
 
       portions: {

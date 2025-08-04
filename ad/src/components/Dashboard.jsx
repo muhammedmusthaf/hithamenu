@@ -10,7 +10,7 @@ const Dashboard = ({ onLogout }) => {
   const [items, setItems] = useState([]);
 
   const fetchItems = async () => {
-    const res = await axios.get("https://hithaadmin.vercel.app/api/menu/", {
+    const res = await axios.get("https://hithamenu.onrender.com/api/menu/", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     setItems(res.data);
@@ -18,7 +18,7 @@ const Dashboard = ({ onLogout }) => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure to delete?")) {
-      await axios.delete(`https://hithaadmin.vercel.app/api/menu/${id}`, {
+      await axios.delete(`https://hithamenu.onrender.com/api/menu/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       fetchItems();
