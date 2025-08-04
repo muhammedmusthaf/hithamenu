@@ -12,74 +12,46 @@ const Menu = () => {
   const [apiError, setApiError] = useState(null);
 
   // Fetch menu items from backend
-  useEffect(() => {
-    const fetchMenuItems = async () => {
-      try {
-        // Replace with your actual backend URL
-        const response = await fetch('https://hithamenu.onrender.com/api/menu/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch menu items');
-        }
-        const items = await response.json();
-        setMenuItems(items);
-        
-        // Extract unique categories from items
-        const uniqueCategories = [...new Set(items.map(item => item.category))];
-        const categoryData = uniqueCategories.map(category => ({
-          id: category.toLowerCase(),
-          name: category,
-          image: getCategoryImage(category),
-          color: getCategoryColor(category)
-        }));
-        setCategories(categoryData);
-        
-        setApiError(null);
-      } catch (error) {
-        console.error('Error fetching menu items:', error);
-        setApiError('Failed to load menu items. Please try again later.');
-      } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+ useEffect(() => {
+  const fetchMenuItems = async () => {
+    try {
+      const response = await fetch('https://hithamenu.onrender.com/api/menu/');
+      if (!response.ok) {
+        throw new Error('Failed to fetch menu items');
       }
-    };
+      const items = await response.json();
+      setMenuItems(items);
 
-    fetchMenuItems();
-  }, []);
+      // Get unique categories and one image per category
+      const categoryMap = {};
+      items.forEach(item => {
+        const cat = item.category;
+        if (!categoryMap[cat]) {
+          categoryMap[cat] = {
+            id: cat.toLowerCase(),
+            name: cat,
+            image: item.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop',
+            color: getCategoryColor(cat)
+          };
+        }
+      });
+
+      setCategories(Object.values(categoryMap));
+      setApiError(null);
+    } catch (error) {
+      console.error('Error fetching menu items:', error);
+      setApiError('Failed to load menu items. Please try again later.');
+    } finally {
+      setTimeout(() => setLoading(false), 2000);
+    }
+  };
+
+  fetchMenuItems();
+}, []);
+
 
   // Helper function to get category image
-  const getCategoryImage = (category) => {
-    const imageMap = {  
-       "Hot Drinks": "/assets/hot.jpg",
-  "Juice": "/assets/juice.jpg",
-  "Mocktail": "/assets/mocktail.jpg",
-  "Milkshake": "/assets/milshake.jpg",
-  "Mojito": "/assets/Mojito.jpg",
-  "Ice Creams": "/assets/ice.jpg",
-  "Veg Soups": "/assets/vegsoup.jpg",
-  "Non-Veg Soups": "/assets/nonvegsoup.jpg",
-  "Chats": "/assets/chats.JPG",
-  "Roti": "/assets/roti.jpg",
-  "Rolls": "/assets/ROLL.jpg",
-  "Chinese Starters (Veg)": "/assets/chineseveg.jpg",
-  "Chinese Starters (Non-Veg)": "/assets/chinesenon.jpg",
-  "Veg": "/assets/veg.jpg",
-  "Non-Veg": "/assets/nonveg.jpg",
-  "Veg Biryani": "/assets/vegbri.jpg",
-  "Non-Veg Biryani": "assets/nonvegbri.jpg",
-  "North Indian (Veg)": "assets/north.jpg",
-  "North Indian (Non-Veg)": "assets/northnon.jpg",
-  "Tandoori (Veg)": "assets/tandoori.jpg",
-  "Tandoori (Non-Veg)": "assets/tandoorinon.jpg",
-  "South Indian (Non-Veg)": "assets/south.jpg",
-  "Rice Items": "assets/rice.jpg",
-  "Salad": "assets/salad.jpg",
-  "Meals": "assets/meals.jpg"
-
-    };
-       return imageMap[category] || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop';
-
-  };
+ 
 
   // Helper function to get category color
   const getCategoryColor = (category) => {
