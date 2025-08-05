@@ -139,7 +139,7 @@ const Menu = () => {
       </div>
       <div className="loading-dots">
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="dot" style={{ animationDelay: `${i * 0.16}s` }}></div>
+          <div key={i} className="dot" style={{ animationDelay: `${i * 0.10}s` }}></div>
         ))}
       </div>
     </div>
