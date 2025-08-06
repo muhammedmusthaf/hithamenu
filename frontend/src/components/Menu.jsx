@@ -101,7 +101,7 @@ const handleCategoryClick = (category) => {
   setScrollY(window.scrollY); // save current scroll position
   setSelectedCategory(category);
   setCurrentPage('items');
-  document.body.style.overflow = 'hidden'; // Optional, depending on UI
+ 
 };
 
 
@@ -110,8 +110,7 @@ const handleCategoryClick = (category) => {
   setSelectedCategory(null);
   setTimeout(() => {
     window.scrollTo(0, scrollY); // restore previous scroll
-    document.body.style.overflow = 'auto'; // allow scrolling again
-  }, 100); // small delay to ensure render
+  });
 };
 
 
