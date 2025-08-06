@@ -1,15 +1,10 @@
-import React, { useState, useEffect ,useParams,useNavigate,useLocation} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, Star, ArrowLeft, ChefHat, MapPin, Phone, Mail, Instagram, Clock, Users, Award } from 'lucide-react';
 import './Menu.css';
 
 const Menu = () => {
   const [loading, setLoading] = useState(true);
-const params = useParams();
-const navigate = useNavigate();
-const location = useLocation();
-
-const selectedCategoryId = params.categoryId;
-const currentPage = selectedCategoryId ? 'items' : 'categories';
+  const [currentPage, setCurrentPage] = useState('categories');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
@@ -101,11 +96,14 @@ const currentPage = selectedCategoryId ? 'items' : 'categories';
   };
 
   const handleCategoryClick = (category) => {
-   navigate(`/category/${category.id}`);
+    setSelectedCategory(category);
+    setCurrentPage('items');
+     window.scrollTo(0, 0);
   };
 
   const handleBackToCategories = () => {
-    navigate('/');
+    setCurrentPage('categories');
+    setSelectedCategory(null);
   };
 
   const RestaurantLogo = () => (
