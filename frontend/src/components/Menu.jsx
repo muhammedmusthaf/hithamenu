@@ -101,6 +101,9 @@ const handleCategoryClick = (category) => {
   setScrollY(window.scrollY); // save current scroll position
   setSelectedCategory(category);
   setCurrentPage('items');
+  setTimeout(() => {
+    window.scrollTo(0, 0); // scroll to top when changing pages
+  }, 0);
  
 };
 
