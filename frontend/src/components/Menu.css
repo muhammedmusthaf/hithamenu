@@ -380,7 +380,7 @@ body {
 }
 
 .back-btn {
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 20px;
   background: rgba(0, 0, 0, 0.7);
@@ -394,7 +394,7 @@ body {
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 10;
+  z-index: 1000;
   backdrop-filter: blur(10px);
   border: 2px solid #d4af37;
 }
