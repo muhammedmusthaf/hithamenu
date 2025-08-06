@@ -1,15 +1,18 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Menu from './components/Menu.jsx';
+import React from 'react';
+import { BrowserRouter,Routes,Route } from 'react-router-dom'; // ✅ import BrowserRouter
+
+import './index.css';
+import Menu from './components/Menu';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/menu" />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/menu/:categoryId" element={<Menu />} />
-      </Routes>
-    </Router>
+    <BrowserRouter> {/* ✅ wrap here */}
+      <div className="App">
+       <Routes>
+        <Route path="/" element={<Menu />} />
+      </Routes> 
+      </div>
+    </BrowserRouter>
   );
 }
 

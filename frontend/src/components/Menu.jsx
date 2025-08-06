@@ -1,33 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Star, ArrowLeft, ChefHat, MapPin, Phone, Mail, Instagram, Clock, Users, Award } from 'lucide-react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 import './Menu.css';
 
-
-
 const Menu = () => {
-  const { categoryId } = useParams();
-const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
- const [scrollY, setScrollY] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
-const currentPage = categoryId ? 'items' : 'categories';
-
-const selectedCategory = categoryId
-  ? categories.find((cat) => cat.id === categoryId)
-  : null;
-
+  const [currentPage, setCurrentPage] = useState('categories');
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const [categories, setCategories] = useState([]);
   const [apiError, setApiError] = useState(null);
 
   // Fetch menu items from backend
- useEffect(() => {
+useEffect(() => {
   window.scrollTo(0, 0);
+}, [currentPage]);
 
+useEffect(() => {
   const fetchMenuItems = async () => {
     try {
       const response = await fetch('https://hithamenu.onrender.com/api/menu/');
@@ -62,7 +54,7 @@ const selectedCategory = categoryId
   };
 
   fetchMenuItems();
-}, [categoryId]);
+}, []);
 
 
   // Helper function to get category image
@@ -111,19 +103,20 @@ const selectedCategory = categoryId
   };
 
 const handleCategoryClick = (category) => {
-  setScrollY(window.scrollY);
-  navigate(`/menu/${category.id}`);
+  setScrollY(window.scrollY); // save current scroll position
+  setSelectedCategory(category);
+  setCurrentPage('items');
+ 
 };
-
 
 
   const handleBackToCategories = () => {
-  navigate('/menu');
+  setCurrentPage('categories');
+  setSelectedCategory(null);
   setTimeout(() => {
-    window.scrollTo(0, scrollY);
+    window.scrollTo(0, scrollY); // restore previous scroll
   });
 };
-
 
 
   const RestaurantLogo = () => (
