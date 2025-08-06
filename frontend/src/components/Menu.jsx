@@ -42,7 +42,7 @@ const Menu = () => {
       console.error('Error fetching menu items:', error);
       setApiError('Failed to load menu items. Please try again later.');
     } finally {
-      setTimeout(() => setLoading(false), 2000);
+      setLoading(false);
     }
   };
 
@@ -312,7 +312,7 @@ const Menu = () => {
             style={{ '--category-color': category.color }}
           >
             <div className="category-image-container">
-              <img src={category.image} alt={category.name} />
+              <img src={category.image} alt={category.name} loading='lazy' />
               <div className="category-overlay">
                 <div className="category-border">
                   <h3>{category.name}</h3>
@@ -387,6 +387,7 @@ const Menu = () => {
                     <img 
                       src={item.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=250&fit=crop'} 
                       alt={item.name} 
+                      loading='lazy'
                     />
                   </div>
                   <div className="item-info">
