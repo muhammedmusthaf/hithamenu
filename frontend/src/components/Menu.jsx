@@ -4,6 +4,8 @@ import './Menu.css';
 
 const Menu = () => {
   const [loading, setLoading] = useState(true);
+  const [scrollY, setScrollY] = useState(0);
+
   const [currentPage, setCurrentPage] = useState('categories');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [favorites, setFavorites] = useState([]);
@@ -95,16 +97,23 @@ const Menu = () => {
     );
   };
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage('items');
-     window.scrollTo(0, 0);
-  };
+const handleCategoryClick = (category) => {
+  setScrollY(window.scrollY); // save current scroll position
+  setSelectedCategory(category);
+  setCurrentPage('items');
+  document.body.style.overflow = 'hidden'; // Optional, depending on UI
+};
+
 
   const handleBackToCategories = () => {
-    setCurrentPage('categories');
-    setSelectedCategory(null);
-  };
+  setCurrentPage('categories');
+  setSelectedCategory(null);
+  setTimeout(() => {
+    window.scrollTo(0, scrollY); // restore previous scroll
+    document.body.style.overflow = 'auto'; // allow scrolling again
+  }, 100); // small delay to ensure render
+};
+
 
   const RestaurantLogo = () => (
     <div className="restaurant-logo">
