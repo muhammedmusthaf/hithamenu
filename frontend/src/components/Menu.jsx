@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Star, ArrowLeft, ChefHat, MapPin, Phone, Mail, Instagram, Clock, Users, Award } from 'lucide-react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+
 import './Menu.css';
 
-const Menu = () => {
-  const [loading, setLoading] = useState(true);
-  const [scrollY, setScrollY] = useState(0);
 
-  const [currentPage, setCurrentPage] = useState('categories');
-  const [selectedCategory, setSelectedCategory] = useState(null);
+
+const Menu = () => {
+  const { categoryId } = useParams();
+const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
+ const [scrollY, setScrollY] = useState(0);
+
+const currentPage = categoryId ? 'items' : 'categories';
+
+const selectedCategory = categoryId
+  ? categories.find((cat) => cat.id === categoryId)
+  : null;
+
   const [favorites, setFavorites] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -15,6 +26,8 @@ const Menu = () => {
 
   // Fetch menu items from backend
  useEffect(() => {
+  window.scrollTo(0, 0);
+
   const fetchMenuItems = async () => {
     try {
       const response = await fetch('https://hithamenu.onrender.com/api/menu/');
@@ -49,7 +62,7 @@ const Menu = () => {
   };
 
   fetchMenuItems();
-}, []);
+}, [categoryId]);
 
 
   // Helper function to get category image
@@ -98,23 +111,19 @@ const Menu = () => {
   };
 
 const handleCategoryClick = (category) => {
-  setScrollY(window.scrollY); // save current scroll position
-  setSelectedCategory(category);
-  setCurrentPage('items');
-  setTimeout(() => {
-    window.scrollTo(0, 0); // scroll to top when changing pages
-  }, 0);
- 
+  setScrollY(window.scrollY);
+  navigate(`/menu/${category.id}`);
 };
+
 
 
   const handleBackToCategories = () => {
-  setCurrentPage('categories');
-  setSelectedCategory(null);
+  navigate('/menu');
   setTimeout(() => {
-    window.scrollTo(0, scrollY); // restore previous scroll
+    window.scrollTo(0, scrollY);
   });
 };
+
 
 
   const RestaurantLogo = () => (

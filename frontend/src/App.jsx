@@ -1,20 +1,14 @@
-import React from 'react';
-import { BrowserRouter,Routes,Route } from 'react-router-dom'; // ✅ import BrowserRouter
-
-import './index.css';
-import Menu from './components/Menu';
-import ScrollTop from './components/ScrollTop';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Menu from './components/Menu.jsx';
 
 function App() {
   return (
-    <BrowserRouter> {/* ✅ wrap here */}
-      <div className="App">
-        <ScrollTop />
-        <Routes>
-        <Route path="/" element={<Menu />} />
+    <Router>
+      <Routes>
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/menu/:categoryId" element={<Menu />} />
       </Routes>
-      </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 
