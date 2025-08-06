@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom'; // ✅ import BrowserRouter
+import { BrowserRouter,Routes,Route } from 'react-router-dom'; // ✅ import BrowserRouter
 
 import './index.css';
 import Menu from './components/Menu';
@@ -10,7 +10,9 @@ function App() {
     <BrowserRouter> {/* ✅ wrap here */}
       <div className="App">
         <ScrollTop />
-        <Menu />
+        <Routes>
+        <Route path="/" element={<Menu />} />
+      </Routes>
       </div>
     </BrowserRouter>
   );
