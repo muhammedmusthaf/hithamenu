@@ -964,6 +964,7 @@ body {
 
   .item-price {
     font-size: 1.2rem;
+    margin:  auto;
   }
 
   .item-rating {
@@ -1273,6 +1274,7 @@ body {
 
   .item-price {
     font-size: 1.1rem;
+    margin: auto;
   }
 
   .item-rating {
