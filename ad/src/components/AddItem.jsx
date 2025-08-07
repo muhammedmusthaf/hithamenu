@@ -29,22 +29,42 @@ const AddItem = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const imageUrl = await handleUpload();
-    const itemData = {
-      ...data,
-      image: imageUrl,
-      portions: {
-        quarter: Number(data.portions.quarter),
-        half: Number(data.portions.half),
-        full: Number(data.portions.full),
-      },
-    };
-    await axios.post("https://hithamenu.onrender.com/api/menu/", itemData, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
-    navigate("/");
+  e.preventDefault();
+
+  // Check if at least one price field is filled
+  const hasAnyPrice =
+    data.price ||
+    data.portions.quarter ||
+    data.portions.half ||
+    data.portions.full;
+
+  if (!hasAnyPrice) {
+    alert("Please enter at least one price (base or portion).");
+    return;
+  }
+
+  const imageUrl = await handleUpload();
+
+  const itemData = {
+    name: data.name,
+    category: data.category,
+    description: data.description,
+    image: imageUrl,
+    price: data.price ? Number(data.price) : undefined,
+    portions: {
+      quarter: data.portions.quarter ? Number(data.portions.quarter) : undefined,
+      half: data.portions.half ? Number(data.portions.half) : undefined,
+      full: data.portions.full ? Number(data.portions.full) : undefined,
+    },
   };
+
+  await axios.post("https://hithamenu.onrender.com/api/menu/", itemData, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  });
+
+  navigate("/");
+};
+
 
   return (
     <div className="admin-container">
