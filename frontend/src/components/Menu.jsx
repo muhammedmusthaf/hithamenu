@@ -49,7 +49,9 @@ useEffect(() => {
       console.error('Error fetching menu items:', error);
       setApiError('Failed to load menu items. Please try again later.');
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
     }
   };
 
@@ -225,7 +227,7 @@ const handleCategoryClick = (category) => {
         <div className="delivery-info">
           <div className="delivery-icon">🛵</div>
           <div className="delivery-text">
-            <h4>Free Delivery</h4>
+            <h4>Home Delivery</h4>
             <p>within 2 km distance for Minimum order of Rs.300/-</p>
           </div>
         </div>
