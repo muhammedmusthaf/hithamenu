@@ -4,9 +4,7 @@ import { Heart, Star, ArrowLeft, ChefHat, MapPin, Phone, Mail, Instagram, Clock,
 import './Menu.css';
 
 const Menu = () => {
-  const [loading, setLoading] = useState(true);
   const [scrollY, setScrollY] = useState(0);
-
   const [currentPage, setCurrentPage] = useState('categories');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [favorites, setFavorites] = useState([]);
@@ -15,52 +13,44 @@ const Menu = () => {
   const [apiError, setApiError] = useState(null);
 
   // Fetch menu items from backend
-useEffect(() => {
-  window.scrollTo(0, 0);
-}, [currentPage]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
-useEffect(() => {
-  const fetchMenuItems = async () => {
-    try {
-      const response = await fetch('https://hithamenu.onrender.com/api/menu/');
-      if (!response.ok) {
-        throw new Error('Failed to fetch menu items');
-      }
-      const items = await response.json();
-      setMenuItems(items);
-
-      // Get unique categories and one image per category
-      const categoryMap = {};
-      items.forEach(item => {
-        const cat = item.category;
-        if (!categoryMap[cat]) {
-          categoryMap[cat] = {
-            id: cat.toLowerCase(),
-            name: cat,
-            image: item.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop',
-            color: getCategoryColor(cat)
-          };
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await fetch('https://hithamenu.onrender.com/api/menu/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch menu items');
         }
-      });
+        const items = await response.json();
+        setMenuItems(items);
 
-      setCategories(Object.values(categoryMap));
-      setApiError(null);
-    } catch (error) {
-      console.error('Error fetching menu items:', error);
-      setApiError('Failed to load menu items. Please try again later.');
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 3000);
-    }
-  };
+        // Get unique categories and one image per category
+        const categoryMap = {};
+        items.forEach(item => {
+          const cat = item.category;
+          if (!categoryMap[cat]) {
+            categoryMap[cat] = {
+              id: cat.toLowerCase(),
+              name: cat,
+              image: item.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop',
+              color: getCategoryColor(cat)
+            };
+          }
+        });
 
-  fetchMenuItems();
-}, []);
+        setCategories(Object.values(categoryMap));
+        setApiError(null);
+      } catch (error) {
+        console.error('Error fetching menu items:', error);
+        setApiError('Failed to load menu items. Please try again later.');
+      }
+    };
 
-
-  // Helper function to get category image
- 
+    fetchMenuItems();
+  }, []);
 
   // Helper function to get category color
   const getCategoryColor = (category) => {
@@ -104,22 +94,19 @@ useEffect(() => {
     );
   };
 
-const handleCategoryClick = (category) => {
-  setScrollY(window.scrollY); // save current scroll position
-  setSelectedCategory(category);
-  setCurrentPage('items');
- 
-};
-
+  const handleCategoryClick = (category) => {
+    setScrollY(window.scrollY); // save current scroll position
+    setSelectedCategory(category);
+    setCurrentPage('items');
+  };
 
   const handleBackToCategories = () => {
-  setCurrentPage('categories');
-  setSelectedCategory(null);
-  setTimeout(() => {
-    window.scrollTo(0, scrollY); // restore previous scroll
-  });
-};
-
+    setCurrentPage('categories');
+    setSelectedCategory(null);
+    setTimeout(() => {
+      window.scrollTo(0, scrollY); // restore previous scroll
+    });
+  };
 
   const RestaurantLogo = () => (
     <div className="restaurant-logo">
@@ -140,22 +127,6 @@ const handleCategoryClick = (category) => {
         <div className="decorative-swirl left"></div>
         <div className="center-dot"></div>
         <div className="decorative-swirl right"></div>
-      </div>
-    </div>
-  );
-
-  const LoaderPage = () => (
-    <div className="loader-page">
-      <div className="loader-background"></div>
-      <div className="loader-container">
-        <div className="logo-fixed">
-          <RestaurantLogo />
-        </div>
-      </div>
-      <div className="loading-dots">
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className="dot" style={{ animationDelay: `${i * 0.10}s` }}></div>
-        ))}
       </div>
     </div>
   );
@@ -349,104 +320,100 @@ const handleCategoryClick = (category) => {
 
     return (
       <div className="items-page">
-        <header 
-          className="items-header" 
-          style={{ 
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${categoryData?.image})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        >
-          <button className="back-btn" onClick={handleBackToCategories}>
-            <ArrowLeft size={24} />
-          </button>
-          
-          <div className="header-logo-small">
-            <img 
-              src="assets/hitha.jpg" 
-              alt="Hitha Logo" 
-              className="header-logo-img"
-            />
-          </div>
-          
-          <div className="header-content">
-            <div className="category-title">
-              <div className="ornamental-header">
-                <div className="header-decoration"></div>
-                <h2>{categoryData?.name}</h2>
-                <div className="header-decoration"></div>
-              </div>
-              <p className="category-subtitle">Fresh • Delicious • Authentic</p>
-            </div>
-          </div>
-        </header>
-
-        <div className="menu-section">
-          <div className="section-title">
-            <div className="title-decoration">
-              <div className="decorative-line"></div>
-              <h3>MENU</h3>
-              <div className="decorative-line"></div>
-            </div>
-          </div>
-          
-          <div className="items-list">
-            {items.length === 0 ? (
-              <div className="no-items">
-                <p>No items found for this category.</p>
-              </div>
-            ) : (
-              items.map(item => (
-                <div key={item._id} className="item-card">
-                  <div className="item-image">
-                    <img 
-                      src={item.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=250&fit=crop'} 
-                      alt={item.name} 
-                      loading='lazy'
-                    />
-                  </div>
-                  <div className="item-info">
-                    <h4>{item.name}</h4>
-                    {item.description && (
-                      <div className="item-description">
-                        <p>{item.description}</p>
-                      </div>
-                    )}
-                    {item.portions && (item.portions.quarter > 0 || item.portions.half > 0 || item.portions.full > 0) && (
-                      <div className="item-details">
-                        {item.portions.quarter && item.portions.quarter > 0 && <span>Quarter: ₹{item.portions.quarter}</span>}
-                        {item.portions.half && item.portions.half > 0 && <span>Half: ₹{item.portions.half}</span>}
-                        {item.portions.full && item.portions.full > 0 && <span>Full: ₹{item.portions.full}</span>}
-                      </div>
-                    )}
-                    <div className="item-footer">
-                      <span className="item-price">{formatPrice(item)}</span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleFavorite(item._id)}
-                    className={`item-favorite ${favorites.includes(item._id) ? 'active' : ''}`}
-                  >
-                    <Heart
-                      size={18}
-                      fill={favorites.includes(item._id) ? '#ff6b35' : 'none'}
-                      color={favorites.includes(item._id) ? '#ff6b35' : 'white'}
-                    />
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
+      <header 
+        className="items-header" 
+        style={{ 
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${categoryData?.image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+        }}
+      >
+        <button className="back-btn" onClick={handleBackToCategories}>
+        <ArrowLeft size={24} />
+        </button>
+        
+        <div className="header-logo-small">
+        <img 
+          src="assets/hitha.jpg" 
+          alt="Hitha Logo" 
+          className="header-logo-img"
+        />
         </div>
         
-        <Footer />
+        <div className="header-content">
+        <div className="category-title">
+          <div className="ornamental-header">
+          <div className="header-decoration"></div>
+          <h2>{categoryData?.name}</h2>
+          <div className="header-decoration"></div>
+          </div>
+          <p className="category-subtitle">Fresh • Delicious • Authentic</p>
+        </div>
+        </div>
+      </header>
+
+      <div className="menu-section">
+        <div className="section-title">
+        <div className="title-decoration">
+          <div className="decorative-line"></div>
+          <h3>MENU</h3>
+          <div className="decorative-line"></div>
+        </div>
+        </div>
+        
+        <div className="items-list">
+        {items.length === 0 ? (
+          <div className="no-items">
+          <p>No items found for this category.</p>
+          </div>
+        ) : (
+          items.map(item => (
+          <div key={item._id} className="item-card">
+            <div className="item-image">
+            <img 
+              src={item.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=250&fit=crop'} 
+              alt={item.name} 
+              loading='lazy'
+            />
+            </div>
+            <div className="item-info">
+            <h4>{item.name}</h4>
+            {item.description && (
+              <div className="item-description">
+              <p>{item.description}</p>
+              </div>
+            )}
+            {item.portions && (item.portions.quarter > 0 || item.portions.half > 0 || item.portions.full > 0) && (
+              <div className="item-details">
+              {item.portions.quarter && item.portions.quarter > 0 && <span>Quarter: ₹{item.portions.quarter}</span>}
+              {item.portions.half && item.portions.half > 0 && <span>Half: ₹{item.portions.half}</span>}
+              {item.portions.full && item.portions.full > 0 && <span>Full: ₹{item.portions.full}</span>}
+              </div>
+            )}
+            <div className="item-footer">
+              <span className="item-price">{formatPrice(item)}</span>
+            </div>
+            </div>
+            <button
+            onClick={() => toggleFavorite(item._id)}
+            className={`item-favorite ${favorites.includes(item._id) ? 'active' : ''}`}
+            >
+            <Heart
+              size={18}
+              fill={favorites.includes(item._id) ? '#ff6b35' : 'none'}
+              color={favorites.includes(item._id) ? '#ff6b35' : 'white'}
+            />
+            </button>
+          </div>
+          ))
+        )}
+        </div>
+      </div>
+      
+      <Footer />
       </div>
     );
   };
-
-  if (loading) {
-    return <LoaderPage />;
-  }
 
   return currentPage === 'categories' ? <CategoriesPage /> : <ItemsPage />;
 };
