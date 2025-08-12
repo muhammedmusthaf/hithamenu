@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Star, ArrowLeft, ChefHat, MapPin, Phone, Mail, Instagram, Clock, Users, Award } from 'lucide-react';
+import axios from 'axios';
 
 import './Menu.css';
 
@@ -20,11 +21,8 @@ const Menu = () => {
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
-        const response = await fetch('https://hithamenu.onrender.com/api/menu/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch menu items');
-        }
-        const items = await response.json();
+        const response = await axios.get('https://hithamenu.onrender.com/api/menu/');
+        const items = response.data;
         setMenuItems(items);
 
         // Get unique categories and one image per category
@@ -45,7 +43,13 @@ const Menu = () => {
         setApiError(null);
       } catch (error) {
         console.error('Error fetching menu items:', error);
-        setApiError('Failed to load menu items. Please try again later.');
+        if (error.response) {
+          setApiError(`Server error: ${error.response.status}. Please try again later.`);
+        } else if (error.request) {
+          setApiError('Network error. Please check your connection and try again.');
+        } else {
+          setApiError('Failed to load menu items. Please try again later.');
+        }
       }
     };
 
